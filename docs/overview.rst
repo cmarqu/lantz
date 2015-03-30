@@ -48,7 +48,7 @@ because no name was given. If you want to specify a name, do it at object creati
 
 Separation into multiple loggers makes finding problems easier and enables fine grained control over log output.
 
-By the way, if you are running your program from an IDE or you don't want to clutter your current terminal, you can log to a socket and view the log output in another window (even in another computer, but we leave this for latter). Open first another terminal and run::
+By the way, if you are running your program from an IDE or you don't want to clutter your current terminal, you can log to a socket and view the log output in another window (even in another computer, but we leave this for later). Open first another terminal and run::
 
     $ lantzmonitor.py -l 1
 
