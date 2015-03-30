@@ -54,7 +54,7 @@ By the way, if you are running your program from an IDE or you don't want to clu
 
 (If you want a nicer user interface with filtering and searching capabilities, try LogView http://code.google.com/p/logview/)
 
-To your python program, replace the logging lines by::
+To use this in your python program, replace the logging lines by::
 
     import logging
     from lantz import log_to_socket
@@ -62,7 +62,7 @@ To your python program, replace the logging lines by::
 
 When you run it, you will see the log appearing in the logging window.
 
-By the way, `lantzmonitor` is more than log to screen dumper. Tailored for lantz, it can display instrument specific messages as well as an on-line summary indicating the current value for each property. Hopefully, you will never need to add a print statement in your program any more!
+By the way, `lantzmonitor` is more than a log-to-screen dumper. Tailored for lantz, it can display instrument-specific messages as well as an on-line summary indicating the current value for each property. Hopefully, you will never need to add a print statement in your program any more!
 
 
 Timing
@@ -70,7 +70,7 @@ Timing
 
 .. TODO Partially implemented
 
-Basic statistics of instrument related function calls are kept to facilitate bottleneck identification. While this is not as powerful as python profiler, its much easier to use within your application. You can obtain the statistics for a particular operation using::
+Basic statistics of instrument-related function calls are kept to facilitate bottleneck identification. While this is not as powerful as the python profiler, it is much easier to use within your application. You can obtain the statistics for a particular operation by using::
 
     fungen.timing.stats('set_frequency')
 
@@ -92,7 +92,7 @@ Similarly, you can obtain timing statistics of the getter calling::
 Cache
 -----
 
-Setting and getting drivers properties always does it in the instrument. However, accessing the instrument is time consuming and many times  you just want to a way to recall the last known value. Lantz properties carry their own cache, which can be accessed with the recall method::
+Setting and getting drivers properties always does it in the instrument. However, accessing the instrument is time consuming and many times you just want a way to recall the last known value. Lantz properties carry their own cache, which can be accessed with the recall method::
 
     >>> fungen.recall('amplitude')
     20 V
@@ -103,14 +103,14 @@ You can also access multiple elements::
     {'frequency': 20 MHz, 'amplitude': 20 V}
 
 
-Using recall without arguments gets all defined feats
+Using recall without arguments gets all defined feats::
 
     >>> fungen.recall()
     {'frequency': 20 MHz, 'amplitude': 20 V, 'ac_mode': True }
 
 
-Prevent unnecessary set
------------------------
+Preventing unnecessary set
+--------------------------
 
 The internal cache also prevents unnecessary communication with the instrument::
 
@@ -152,7 +152,7 @@ The cache is what allows to Lantz to avoid unnecessary communication with the in
 
     >>> fungen.amplitude = Q(42, 'V') # No information is set to the instrument as is the value already set
 
-    >>> fungen.update(amplitude=Q(42, 'V'), force=True) # The force true argument ignores cache checking
+    >>> fungen.update(amplitude=Q(42, 'V'), force=True) # The force=True argument ignores cache checking
 
 This can be useful for example when the operator might change the settings using the manual controls.
 
@@ -160,7 +160,7 @@ This can be useful for example when the operator might change the settings using
 Effortless asynchronous get and set
 -----------------------------------
 
-Lantz also provides out of the box asynchronous capabilities for all methods described before. For example::
+Lantz also provides out-of-the-box asynchronous capabilities for all methods described before. For example::
 
     >>> fungen.update_async({'ac_mode': True, 'amplitude': Q(42, 'V')})
     >>> print('I am not blocked!')
@@ -178,7 +178,7 @@ Just like `update_async`, you can use `refresh_async` to obtain the value of one
     >>> DoSomething()
     >>> print(fut.result())
 
-Async methods accept also a callback argument to define a method that will be used
+Async methods also accept a callback argument to define a method that will be used
 
 .. topic:: Under the hood
 
@@ -202,15 +202,15 @@ If you want to send a command to an instrument only once during a particular scr
 Units
 -----
 
-Instrumentation software need to deal with physical units, and therefore you need to deal with them. Keeping track of the units of each variable in time consuming and error prone, and derives into annoying naming practices such as `freq_in_KHz`. Lantz aims to reduce the burden of this by incorporating units using the Pint_ package. The Quantity object is abbreviated withing Lantz as `Q_` and can be imported from the root::
+Instrumentation software needs to deal with physical units, and therefore you need to deal with them. Keeping track of the units of each variable is time consuming and error prone, and derives into annoying naming practices such as `freq_in_KHz`. Lantz aims to reduce the burden of this by incorporating units using the Pint_ package. The Quantity object is abbreviated within Lantz as `Q_` and can be imported from the root::
 
     from lantz import Q_
 
-    mv = Q_(1, 'mV') # we define milivolt
-    value = 42 * mv # we can use the defined units like this
-    thesame = Q_(42, 'mv') # or like this
+    mv = Q_(1, 'mV') # we define millivolt
+    value = 42 * mV # we can use the defined units like this
+    thesame = Q_(42, 'mV') # or like this
 
-This makes the code a little more verbose but is worth the effort. The code is more explicit and less error prone. It also allows you to do thing like this::
+This makes the code a little more verbose but is worth the effort. The code is more explicit and less error prone. It also allows you to do things like this::
 
     from lantz import Q_
 
@@ -226,7 +226,7 @@ Later you decide to change the function generator by a different one, with a dif
     from lantz import Q_
 
     from lantz.drivers.example import AnotherFunGen as FunGen
-    # In AnotherFunGen, the amplitude of this function generator must be set in milivolts.
+    # In AnotherFunGen, the amplitude of this function generator must be set in millivolts.
 
     with FunGen('COM1') as fungen:
 
@@ -265,7 +265,7 @@ In case you are not convinced, a small technical note:
 User interface
 --------------
 
-Providing a powerful GUI is an important aspect of developing an application for end user. Lantz aims to simplify the UI development by allowing you to correctly connect to `Lantz` Feats and Actions to widgets without any effort. For example, if you generate a GUI using Qt Designer::
+Providing a powerful GUI is an important aspect of developing an application for end users. Lantz aims to simplify the UI development by allowing you to correctly connect to `Lantz` Feats and Actions to widgets without any effort. For example, if you generate a GUI using Qt Designer::
 
     # imports not shown
 
